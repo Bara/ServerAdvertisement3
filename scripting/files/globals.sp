@@ -19,8 +19,6 @@ ArrayList aLanguages;
 ConVar g_cV_Enabled;
 bool g_b_Enabled;
 
-bool g_bTrackerEnabled;
-
 
 int g_iCurrentMessage;
 bool bExpiredMessagesDebug;
