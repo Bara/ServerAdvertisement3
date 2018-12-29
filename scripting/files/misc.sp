@@ -444,7 +444,7 @@ stock bool SA_CheckDate(KeyValues kv)
 		{
 			delete kv;
 			SetFailState("%s (1) Wrong date format in message %i. Use: DD.MM.YYYY",SA3, aMessagesList.Length+1);
-			return;
+			return false;
 		}
 	}
 	else
@@ -471,7 +471,7 @@ stock bool SA_CheckDate(KeyValues kv)
 	{
 		delete kv;
 		SetFailState("%s (2) Wrong date format in message %i. Use: DD.MM.YYYY",SA3, aMessagesList.Length+1);
-		return;
+		return false;
 	}
 	else
 	{
