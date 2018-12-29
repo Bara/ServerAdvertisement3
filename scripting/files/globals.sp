@@ -28,7 +28,6 @@ char sServerType[32];
 char sDefaultLanguage[12];
 
 Database hDB = null;
-char sDBerror[512];
 
 int g_iWM_Enabled;
 char g_sWM_Type[2];

@@ -1,20 +1,45 @@
-public bool SA_MySQLConnect()
+void SA_MySQLConnect()
 {
-  hDB = SQL_Connect("sa3",true, sDBerror, sizeof(sDBerror));
-  if(hDB == null)
-  {
-    SQL_GetError(hDB, sDBerror, sizeof(sDBerror));
-    SetFailState("%s Cannot connect to the DB:\n %s\n\n\n", SA3, sDBerror);
-  }
-  else
-  {
-    PrintToServer("%s Connected to MySQL successfuly!", SA3);
-    SQL_Query(hDB, "SET CHARACTER SET utf8");
-    return true;
-  }
-  return false;
+	if (hDB != null)
+	{
+		return;
+	}
+	
+	if (!SQL_CheckConfig("sa3"))
+	{
+		delete hDB;
+		SetFailState("%s Cannot find the \"sa3\" entry in your databases.cfg", SA3);
+		return;
+	}
+	
+	Database.Connect(SA_OnConnect, "sa3");
 }
-public bool SA_MySQLCheckTables()
+
+public void SA_OnConnect(Database db, const char[] error, any data)
 {
-  return false;
+    if (db == null || strlen(error) > 0)
+    {
+        SetFailState("(OnConnect) Connection to database failed: %s", error);
+        return;
+    }
+
+    DBDriver iDriver = db.Driver;
+    
+    char sType[18];
+    iDriver.GetIdentifier(sType, sizeof(sType));
+
+    if (!StrEqual(sType, "mysql", false))
+    {
+        SetFailState("(OnConnect) TTT has only MySQL and SQLite support!");
+        return;
+    }
+
+    hDB = db;
+    
+    SA_MySQLCheckTables();
+}
+
+bool SA_MySQLCheckTables()
+{
+	return false;
 }
