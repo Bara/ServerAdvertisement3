@@ -58,6 +58,7 @@ stock void AddMessagesToArray(KeyValues kv)
 					kv.GetString(sTempLanguageName, sTempLanguageMessage, sizeof(sTempLanguageMessage), "NOLANG");
 					if(StrEqual(sTempLanguageMessage, "NOLANG"))
 					{
+						delete kv;
 						delete aMessages;
 						delete aMessages_Text;
 						SetFailState("%s '%s' translation missing in message \"%i\"", SA3, sTempLanguageName, aMessagesList.Length+1);
